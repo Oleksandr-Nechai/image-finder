@@ -1,22 +1,36 @@
 import { Component } from 'react';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
+import Searchbar from './components/Searchbar';
+import ImageGallery from 'components/ImageGallery';
 
 import Section from './components/Section';
 
 class App extends Component {
-  state = {};
+  state = {
+    nameImage: '',
+  };
+
+  onSubmitForm = nameImage => {
+    if (this.state.nameImage === nameImage) {
+      Notify.failure('Change search.Please try again.');
+      return;
+    }
+    this.setState({ nameImage: nameImage });
+  };
+
   render() {
     return (
-      <Section text="fdf">
-        <h1>fdfdfdfd</h1>
-        <div>
-          dsdsdsd
-          <ul>
-            <li>
-              <p>dsdsd</p>
-            </li>
-          </ul>
-        </div>
-      </Section>
+      <>
+        <Section>
+          <Searchbar onSubmitForm={this.onSubmitForm} />
+        </Section>
+        <Section>
+          {this.state.nameImage && (
+            <ImageGallery nameImage={this.state.nameImage} />
+          )}
+        </Section>
+      </>
     );
   }
 }
