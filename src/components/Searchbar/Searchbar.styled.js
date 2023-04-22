@@ -56,11 +56,3 @@ export const Button = styled.button`
     opacity: 1;
   }
 `;
-
-export const ErrorStyle = styled.div`
-  position: absolute;
-  right: ${() => window.innerWidth * 0.025 + '%'};
-  top: 10px;
-
-  color: rgb(255, 255, 255);
-`;

@@ -1,17 +1,11 @@
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FcSearch } from 'react-icons/fc';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { validationRequest } from 'services/notifications';
 
 // import PropTypes from 'prop-types';
 
-import {
-  Shape,
-  Container,
-  Input,
-  ErrorStyle,
-  Button,
-} from './Searchbar.styled.js';
+import { Shape, Container, Input, Button } from './Searchbar.styled.js';
 
 function Searchbar({ onSubmitForm }) {
   const handleFormSubmit = (values, actions) => {
@@ -52,7 +46,7 @@ function Searchbar({ onSubmitForm }) {
           </Container>
           <ErrorMessage
             name="nameImage"
-            render={msg => <ErrorStyle>{Notify.failure(msg)}</ErrorStyle>}
+            render={msg => validationRequest(msg)}
           />
         </Shape>
       </Formik>

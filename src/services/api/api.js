@@ -13,9 +13,12 @@ const BASE_PARAMS = {
   },
 };
 
-async function getImages(page, name) {
+async function getImages(page, per_page, name) {
   const searchParams = structuredClone(BASE_PARAMS);
-  searchParams.params = { ...searchParams.params, ...{ q: name, page } };
+  searchParams.params = {
+    ...searchParams.params,
+    ...{ q: name, page, per_page },
+  };
   const response = await axios.get(`${BASE_URL}`, searchParams);
 
   return response.data;
