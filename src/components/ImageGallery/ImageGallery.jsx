@@ -17,7 +17,6 @@ class ImageGallery extends Component {
     images: [],
     page: 1,
     totalHits: null,
-    visible: false,
     perPage: 24,
   };
 
@@ -30,7 +29,7 @@ class ImageGallery extends Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    if (prevProps !== this.props) {
+    if (prevProps.nameImage !== this.props.nameImage) {
       await this.resetPage();
       await this.fetchImages(
         this.state.page,
@@ -51,7 +50,7 @@ class ImageGallery extends Component {
 
   fetchImages = async (page, per_page, nameImage) => {
     try {
-      this.setState({ visible: true });
+      this.props.toggleVisible();
       const users = await getImages(page, per_page, nameImage);
       users.totalHits =
         users.totalHits === 500 ? users.totalHits + 1 : users.totalHits;
@@ -81,11 +80,12 @@ class ImageGallery extends Component {
     } catch (error) {
       handlerServerError(error.message);
     } finally {
-      this.setState({ visible: false });
+      this.props.toggleVisible();
     }
   };
 
-  resetPage = () => this.setState({ page: 1, images: [], totalHits: null });
+  resetPage = async () =>
+    await this.setState({ page: 1, images: [], totalHits: null });
 
   incrementPage = () =>
     this.setState(prevState => ({ page: prevState.page + 1 }));
@@ -99,7 +99,7 @@ class ImageGallery extends Component {
           ))}
         </GalleryList>
 
-        <GalleryFooter style={{ height: '54px', padding: '10px 0' }}>
+        <GalleryFooter>
           <ThreeDots
             height="34"
             width="100"
@@ -109,12 +109,11 @@ class ImageGallery extends Component {
             wrapperStyle={{
               justifyContent: 'center',
             }}
-            wrapperClassName=""
-            visible={this.state.visible}
+            visible={this.props.visible}
           />
 
           {this.state.totalHits > this.state.images.length &&
-            !this.state.visible && (
+            !this.props.visible && (
               <Button incrementPage={this.incrementPage}>Load more</Button>
             )}
         </GalleryFooter>

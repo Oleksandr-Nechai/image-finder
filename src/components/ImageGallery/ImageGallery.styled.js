@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Gallery = styled.div`
   padding-top: ${props => props.theme.spacing.upperPrimary};
   padding-bottom: 20px;
+  overflow-x: hidden;
 `;
 
 export const GalleryList = styled.ul`
@@ -13,6 +14,6 @@ export const GalleryList = styled.ul`
 `;
 
 export const GalleryFooter = styled.div`
-  height: '54px';
-  padding: '10px 0';
+  height: 54px;
+  padding: 10px 0;
 `;

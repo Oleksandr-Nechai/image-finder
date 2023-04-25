@@ -7,7 +7,7 @@ import { validationRequest } from 'services/notifications';
 
 import { Shape, Container, Input, Button } from './Searchbar.styled.js';
 
-function Searchbar({ onSubmitForm }) {
+function Searchbar({ onSubmitForm, visible }) {
   const handleFormSubmit = (values, actions) => {
     if (!values.nameImage.trim()) {
       return;
@@ -40,7 +40,7 @@ function Searchbar({ onSubmitForm }) {
               <Input type="text" name="nameImage" placeholder="Spring" />
             </label>
 
-            <Button type="submit">
+            <Button type="submit" disabled={visible}>
               <FcSearch />
             </Button>
           </Container>

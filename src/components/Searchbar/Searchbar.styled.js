@@ -55,4 +55,7 @@ export const Button = styled.button`
   :focus {
     opacity: 1;
   }
+  :disabled {
+    background-color: red;
+  }
 `;
