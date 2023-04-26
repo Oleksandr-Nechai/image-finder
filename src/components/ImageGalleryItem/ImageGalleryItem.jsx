@@ -21,6 +21,7 @@ class ImageGalleryItems extends Component {
 
   render() {
     const { image } = this.props;
+    console.log(image);
 
     return (
       <>

@@ -42,7 +42,7 @@ function Searchbar({ onSubmitForm, visible }) {
               <Input type="text" name="nameImage" placeholder="Spring" />
             </label>
 
-            <Button type="submit" disabled={visible}>
+            <Button type="submit" disabled={visible} aria-label="find images">
               <FcSearch />
             </Button>
           </Container>
