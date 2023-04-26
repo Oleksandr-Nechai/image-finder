@@ -56,6 +56,6 @@ export const Button = styled.button`
     opacity: 1;
   }
   :disabled {
-    background-color: red;
+    background-color: ${props => props.theme.colors.primaryColor};
   }
 `;

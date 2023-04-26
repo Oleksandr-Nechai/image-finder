@@ -32,11 +32,13 @@ function Searchbar({ onSubmitForm, visible }) {
       <Formik
         initialValues={initialValues}
         onSubmit={handleFormSubmit}
+        validateOnChange={false}
+        validateOnBlur={false}
         validationSchema={SignupSchema}
       >
         <Shape>
           <Container>
-            <label>
+            <label disabled={visible}>
               <Input type="text" name="nameImage" placeholder="Spring" />
             </label>
 
