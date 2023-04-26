@@ -11,26 +11,26 @@ class App extends Component {
     visible: false,
   };
 
-  componentDidMount() {
-    try {
-      const savedQuery = JSON.parse(localStorage.getItem('nameImage'));
-      if (savedQuery) {
-        this.setState({ nameImage: savedQuery });
-      }
-    } catch (error) {
-      console.error('Set state error: ', error.message);
-    }
-  }
+  // componentDidMount() {
+  //   try {
+  //     const savedQuery = JSON.parse(localStorage.getItem('nameImage'));
+  //     if (savedQuery) {
+  //       this.setState({ nameImage: savedQuery });
+  //     }
+  //   } catch (error) {
+  //     console.error('Set state error: ', error.message);
+  //   }
+  // }
 
-  componentDidUpdate(_, prevState) {
-    if (prevState.nameImage !== this.state.nameImage) {
-      try {
-        localStorage.setItem('nameImage', JSON.stringify(this.state.nameImage));
-      } catch (error) {
-        console.error('Set state error: ', error.message);
-      }
-    }
-  }
+  // componentDidUpdate(_, prevState) {
+  //   if (prevState.nameImage !== this.state.nameImage) {
+  //     try {
+  //       localStorage.setItem('nameImage', JSON.stringify(this.state.nameImage));
+  //     } catch (error) {
+  //       console.error('Set state error: ', error.message);
+  //     }
+  //   }
+  // }
 
   onSubmitForm = nameImage => {
     if (this.state.nameImage === nameImage) {

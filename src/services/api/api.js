@@ -9,7 +9,7 @@ const BASE_PARAMS = {
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: false,
-    per_page: '24',
+    per_page: '12',
   },
 };
 

@@ -21,20 +21,15 @@ class ImageGalleryItems extends Component {
 
   render() {
     const { image } = this.props;
-    console.log(image);
 
     return (
       <>
         <GalleryItem onClick={this.toggleModal}>
-          <Image src={image.webformatURL} alt={image.tags} loading="lazy" />
+          <Image src={image.webformatURL} alt={image.tags} />
         </GalleryItem>
         {this.state.isOpen && (
           <Modal onClickModal={this.toggleModal}>
-            <LargeImage
-              src={image.largeImageURL}
-              alt={image.tags}
-              loading="lazy"
-            />
+            <LargeImage src={image.largeImageURL} alt={image.tags} />
             <ModalButton type="button" onClick={this.toggleModal}>
               <GoEyeClosed />
             </ModalButton>

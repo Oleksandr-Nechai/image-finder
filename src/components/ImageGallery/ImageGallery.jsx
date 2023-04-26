@@ -18,7 +18,7 @@ class ImageGallery extends Component {
     images: [],
     page: 1,
     totalHits: null,
-    perPage: 24,
+    perPage: 12,
   };
 
   async componentDidMount() {
