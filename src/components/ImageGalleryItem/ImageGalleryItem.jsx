@@ -1,4 +1,5 @@
 import { GoEyeClosed } from 'react-icons/go';
+import PropTypes from 'prop-types';
 
 import { Component } from 'react';
 import Modal from 'components/Modal';
@@ -44,3 +45,11 @@ class ImageGalleryItems extends Component {
 }
 
 export default ImageGalleryItems;
+
+ImageGalleryItems.propTypes = {
+  image: PropTypes.shape({
+    webformatURL: PropTypes.string.isRequired,
+    tags: PropTypes.string.isRequired,
+    largeImageURL: PropTypes.string.isRequired,
+  }).isRequired,
+};

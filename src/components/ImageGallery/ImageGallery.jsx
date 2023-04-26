@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
+import PropTypes from 'prop-types';
 
 import { Gallery, GalleryList, GalleryFooter } from './ImageGallery.styled';
 import { getImages } from 'services/api';
@@ -123,3 +124,9 @@ class ImageGallery extends Component {
 }
 
 export default ImageGallery;
+
+ImageGallery.propTypes = {
+  toggleVisible: PropTypes.func.isRequired,
+  visible: PropTypes.bool.isRequired,
+  nameImage: PropTypes.string.isRequired,
+};

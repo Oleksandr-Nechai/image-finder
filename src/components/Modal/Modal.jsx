@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 import {
   disableBodyScroll,
   enableBodyScroll,
@@ -46,3 +47,8 @@ class Modal extends Component {
 }
 
 export default Modal;
+
+Modal.propTypes = {
+  onClickModal: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};

@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { FcSearch } from 'react-icons/fc';
 import { validationRequest } from 'services/notifications';
 
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import { Shape, Container, Input, Button } from './Searchbar.styled.js';
 
@@ -57,3 +57,8 @@ function Searchbar({ onSubmitForm, visible }) {
 }
 
 export default Searchbar;
+
+Searchbar.propTypes = {
+  onSubmitForm: PropTypes.func.isRequired,
+  visible: PropTypes.bool.isRequired,
+};
