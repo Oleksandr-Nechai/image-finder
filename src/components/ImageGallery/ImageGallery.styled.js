@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Gallery = styled.div`
-  padding-top: ${props => props.theme.spacing.upperPrimary};
+  padding-top: ${props => props.theme.spacings.upperPrimary};
   padding-bottom: 20px;
   overflow-x: hidden;
 `;
@@ -9,8 +9,8 @@ export const Gallery = styled.div`
 export const GalleryList = styled.ul`
   display: flex;
   flex-wrap: wrap;
+  gap: ${props => props.theme.spacings.gapGallery};
   padding: 8px;
-  gap: 12px;
 `;
 
 export const GalleryFooter = styled.div`

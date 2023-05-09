@@ -1,17 +1,16 @@
 import styled from 'styled-components';
 import { Form, Field } from 'formik';
 
-export const Shape = styled(Form)`
+export const FormStyled = styled(Form)`
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1100;
-  width: 100%;
-  height: ${props => props.theme.spacing.upperPrimary};
 
   display: flex;
   justify-content: center;
-
+  width: 100%;
+  height: ${props => props.theme.spacings.upperPrimary};
   padding: 10px;
   border-radius: 4px;
 
@@ -38,16 +37,17 @@ export const Input = styled(Field)`
   }
 `;
 
-export const Button = styled.button`
+export const ButtonStyled = styled.button`
   position: absolute;
   top: 0;
 
   display: flex;
   align-items: center;
   height: 100%;
+  border: none;
 
   background-color: ${props => props.theme.colors.mainWhite};
-  border: none;
+
   cursor: pointer;
   opacity: 0.6;
 

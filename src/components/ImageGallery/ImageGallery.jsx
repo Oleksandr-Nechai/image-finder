@@ -1,83 +1,66 @@
 import { Component } from 'react';
-import { ThreeDots } from 'react-loader-spinner';
 import PropTypes from 'prop-types';
 
-import { Gallery, GalleryList, GalleryFooter } from './ImageGallery.styled';
-import { getImages } from 'services/api';
 import ImageGalleryItems from 'components/ImageGalleryItem';
 import Button from 'components/Button';
+import Loader from 'components/Loader';
+import { getImages } from 'services/api';
 import {
   findImages,
   rejectRequest,
   handlerServerError,
-  endSearch,
+  finishSearch,
 } from 'services/notifications';
+import { Gallery, GalleryList, GalleryFooter } from './ImageGallery.styled';
 
 class ImageGallery extends Component {
   state = {
     images: [],
     page: 1,
-    totalHits: null,
+    totalElements: null,
     perPage: 12,
   };
 
   async componentDidMount() {
-    await this.fetchImages(
-      this.state.page,
-      this.state.perPage,
-      this.props.nameImage
-    );
+    await this.fetchImages();
   }
 
   async componentDidUpdate(prevProps, prevState) {
     if (prevProps.nameImage !== this.props.nameImage) {
       await this.resetPage();
-      await this.fetchImages(
-        this.state.page,
-        this.state.perPage,
-        this.props.nameImage
-      );
-
-      return;
+      await this.fetchImages();
     }
     if (prevState.page !== this.state.page && this.state.page !== 1) {
-      await this.fetchImages(
-        this.state.page,
-        this.state.perPage,
-        this.props.nameImage
-      );
+      await this.fetchImages();
     }
   }
 
-  fetchImages = async (page, per_page, nameImage) => {
+  fetchImages = async (
+    page = this.state.page,
+    per_page = this.state.perPage,
+    nameImage = this.props.nameImage
+  ) => {
     try {
       this.props.toggleVisible();
-      const users = await getImages(page, per_page, nameImage);
-      users.totalHits =
-        users.totalHits === 500 ? users.totalHits + 1 : users.totalHits;
-      if (!users.totalHits) {
+
+      const { totalHits, hits } = await getImages(page, per_page, nameImage);
+
+      if (!totalHits) {
+        localStorage.removeItem('nameImage');
         rejectRequest();
         return;
       }
-      findImages(users.hits.length);
+      findImages(hits.length);
 
-      if (
-        users.totalHits <=
-        this.state.perPage * (this.state.page - 1) + users.hits.length
-      ) {
-        endSearch();
+      let totalImages = totalHits === 500 ? totalHits + 1 : totalHits;
+      if (totalImages <= per_page * (page - 1) + hits.length) {
+        finishSearch();
       }
-      if (page === 1) {
-        this.setState(() => ({
-          images: [...users.hits],
-          totalHits: users.totalHits,
-        }));
-      } else {
-        this.setState(prevState => ({
-          images: [...prevState.images, ...users.hits],
-          totalHits: users.totalHits,
-        }));
-      }
+
+      this.setState(({ images }) => ({
+        images: page === 1 ? [...hits] : [...images, ...hits],
+        totalElements: totalImages,
+      }));
     } catch (error) {
       handlerServerError(error.message);
     } finally {
@@ -85,38 +68,27 @@ class ImageGallery extends Component {
     }
   };
 
-  resetPage = async () =>
-    await this.setState({ page: 1, images: [], totalHits: null });
+  resetPage = () => this.setState({ page: 1, images: [], totalElements: null });
 
   incrementPage = () =>
     this.setState(prevState => ({ page: prevState.page + 1 }));
 
   render() {
+    const { images, totalElements } = this.state;
+    const { visible } = this.props;
     return (
       <Gallery>
         <GalleryList>
-          {this.state.images.map(image => (
+          {images.map(image => (
             <ImageGalleryItems image={image} key={image.id} />
           ))}
         </GalleryList>
 
         <GalleryFooter>
-          <ThreeDots
-            height="34"
-            width="100"
-            radius="9"
-            color="rgb(0,96,255)"
-            ariaLabel="three-dots-loading"
-            wrapperStyle={{
-              justifyContent: 'center',
-            }}
-            visible={this.props.visible}
-          />
-
-          {this.state.totalHits > this.state.images.length &&
-            !this.props.visible && (
-              <Button incrementPage={this.incrementPage}>Load more</Button>
-            )}
+          <Loader visible={visible} />
+          {totalElements > images.length && !visible && (
+            <Button incrementPage={this.incrementPage}>Load more</Button>
+          )}
         </GalleryFooter>
       </Gallery>
     );

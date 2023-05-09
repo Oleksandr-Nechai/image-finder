@@ -19,9 +19,9 @@ async function getImages(page, per_page, name) {
     ...searchParams.params,
     ...{ q: name, page, per_page },
   };
-  const response = await axios.get(`${BASE_URL}`, searchParams);
+  const { data } = await axios.get(`${BASE_URL}`, searchParams);
 
-  return response.data;
+  return data;
 }
 
 export { getImages };

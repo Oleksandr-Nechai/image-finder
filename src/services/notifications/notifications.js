@@ -33,7 +33,7 @@ export function handlerServerError(message) {
   );
 }
 
-export function endSearch() {
+export function finishSearch() {
   return Notify.info(
     "We're sorry, but you've reached the end of search results.",
     messageOptions

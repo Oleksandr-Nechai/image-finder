@@ -1,13 +1,13 @@
+import { Component } from 'react';
 import { GoEyeClosed } from 'react-icons/go';
 import PropTypes from 'prop-types';
 
-import { Component } from 'react';
 import Modal from 'components/Modal';
 import {
   GalleryItem,
   Image,
   LargeImage,
-  ModalButton,
+  ModalButtonStyled,
 } from './ImageGalleryItem.styled';
 
 class ImageGalleryItems extends Component {
@@ -20,19 +20,20 @@ class ImageGalleryItems extends Component {
   };
 
   render() {
-    const { image } = this.props;
+    const { webformatURL, tags, largeImageURL } = this.props.image;
+    const { isOpen } = this.state;
 
     return (
       <>
         <GalleryItem onClick={this.toggleModal}>
-          <Image src={image.webformatURL} alt={image.tags} />
+          <Image src={webformatURL} alt={tags} />
         </GalleryItem>
-        {this.state.isOpen && (
+        {isOpen && (
           <Modal onClickModal={this.toggleModal}>
-            <LargeImage src={image.largeImageURL} alt={image.tags} />
-            <ModalButton type="button" onClick={this.toggleModal}>
+            <LargeImage src={largeImageURL} alt={tags} />
+            <ModalButtonStyled type="button" onClick={this.toggleModal}>
               <GoEyeClosed />
-            </ModalButton>
+            </ModalButtonStyled>
           </Modal>
         )}
       </>

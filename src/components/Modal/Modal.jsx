@@ -7,12 +7,13 @@ import {
   clearAllBodyScrollLocks,
 } from 'body-scroll-lock';
 
-import { Overlay, ModalStyle } from './Modal.styled';
+import { Overlay, ModalStyled } from './Modal.styled';
 
 const modalPortal = document.querySelector('#modal-root');
 
 class Modal extends Component {
   targetElement = null;
+
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
     this.targetElement = document.querySelector('#modal-root');
@@ -37,9 +38,10 @@ class Modal extends Component {
     }
   };
   render() {
+    const { children } = this.props;
     return createPortal(
       <Overlay onClick={this.handleOverlayClick}>
-        <ModalStyle>{this.props.children}</ModalStyle>
+        <ModalStyled>{children}</ModalStyled>
       </Overlay>,
       modalPortal
     );

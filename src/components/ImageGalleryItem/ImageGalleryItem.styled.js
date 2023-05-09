@@ -1,23 +1,27 @@
 import styled from 'styled-components';
 
 export const GalleryItem = styled.li`
-  flex-basis: calc((100% - 36px) / 4);
-`;
-
-export const Image = styled.img`
-  object-fit: cover;
+  flex-basis: calc(
+    (100% - 3 * ${props => props.theme.spacings.gapGallery}) / 4
+  );
   height: 18vw;
-  border-radius: 2px;
+  border-radius: 8px;
   overflow: hidden;
+
   transition: transform 250ms ${props => props.theme.timingFunction.base},
     box-shadow 250ms ${props => props.theme.timingFunction.base};
+  cursor: zoom-in;
 
   :hover,
   :focus {
     transform: scale(1.05);
     box-shadow: ${props => props.theme.shadow.mainShadow};
-    cursor: zoom-in;
   }
+`;
+
+export const Image = styled.img`
+  object-fit: cover;
+  height: 100%;
 `;
 
 export const LargeImage = styled.img`
@@ -26,7 +30,7 @@ export const LargeImage = styled.img`
   height: 50vw;
 `;
 
-export const ModalButton = styled.button`
+export const ModalButtonStyled = styled.button`
   position: absolute;
   top: 1%;
   right: 1%;

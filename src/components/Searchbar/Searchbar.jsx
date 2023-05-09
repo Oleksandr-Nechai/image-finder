@@ -1,20 +1,24 @@
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FcSearch } from 'react-icons/fc';
-import { validationRequest } from 'services/notifications';
-
 import PropTypes from 'prop-types';
 
-import { Shape, Container, Input, Button } from './Searchbar.styled.js';
+import { validationRequest } from 'services/notifications';
+
+import {
+  FormStyled,
+  Container,
+  Input,
+  ButtonStyled,
+} from './Searchbar.styled.js';
 
 function Searchbar({ onSubmitForm, visible }) {
-  const handleFormSubmit = (values, actions) => {
-    if (!values.nameImage.trim()) {
+  const handleFormSubmit = ({ nameImage }, { resetForm }) => {
+    if (!nameImage.trim()) {
       return;
     }
-    const nameImage = values.nameImage.toLowerCase();
-    onSubmitForm(nameImage);
-    actions.resetForm();
+    onSubmitForm(nameImage.toLowerCase());
+    resetForm();
   };
 
   const initialValues = {
@@ -36,21 +40,25 @@ function Searchbar({ onSubmitForm, visible }) {
         validateOnBlur={false}
         validationSchema={SignupSchema}
       >
-        <Shape>
+        <FormStyled>
           <Container>
-            <label disabled={visible}>
+            <label>
               <Input type="text" name="nameImage" placeholder="Spring" />
             </label>
 
-            <Button type="submit" disabled={visible} aria-label="find images">
+            <ButtonStyled
+              type="submit"
+              disabled={visible}
+              aria-label="find images"
+            >
               <FcSearch />
-            </Button>
+            </ButtonStyled>
           </Container>
           <ErrorMessage
             name="nameImage"
             render={msg => validationRequest(msg)}
           />
-        </Shape>
+        </FormStyled>
       </Formik>
     </>
   );

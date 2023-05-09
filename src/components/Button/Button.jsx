@@ -1,5 +1,5 @@
-import { ButtonStyled } from './Button.styled';
 import PropTypes from 'prop-types';
+import { ButtonStyled } from './Button.styled';
 
 function Button({ children, incrementPage }) {
   return (

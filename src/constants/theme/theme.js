@@ -3,8 +3,9 @@ export const theme = {
     primaryColor: 'rgb(0,0,255)',
     mainWhite: '#FFF',
   },
-  spacing: {
+  spacings: {
     upperPrimary: '40px',
+    gapGallery: '12px',
   },
   shadow: {
     mainShadow:
