@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 
 import ImageGalleryItems from 'components/ImageGalleryItem';
@@ -19,6 +19,9 @@ class ImageGallery extends Component {
     page: 1,
     totalElements: null,
     perPage: 12,
+    galleryItemRef: createRef(),
+    galleryFooterRef: createRef(),
+    galleryListRef: createRef(),
   };
 
   async componentDidMount() {
@@ -33,7 +36,34 @@ class ImageGallery extends Component {
     if (prevState.page !== this.state.page && this.state.page !== 1) {
       await this.fetchImages();
     }
+    if (this.state.page !== 1) {
+      this.scrollToBottom();
+    }
   }
+
+  scrollToBottom = () => {
+    const { galleryItemRef, galleryFooterRef, galleryListRef } = this.state;
+
+    const gapSizeGallery = window
+      .getComputedStyle(galleryListRef.current)
+      .getPropertyValue('gap');
+
+    const heightGalleryItem =
+      galleryItemRef.current.getBoundingClientRect().height;
+
+    const heightGalleryFooter =
+      galleryFooterRef.current.getBoundingClientRect().height;
+
+    const scrollPosition =
+      heightGalleryItem * 3 -
+      heightGalleryFooter +
+      0.5 * parseInt(gapSizeGallery);
+
+    window.scrollBy({
+      top: scrollPosition,
+      behavior: 'smooth',
+    });
+  };
 
   fetchImages = async (
     page = this.state.page,
@@ -74,17 +104,28 @@ class ImageGallery extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
 
   render() {
-    const { images, totalElements } = this.state;
+    const {
+      images,
+      totalElements,
+      galleryItemRef,
+      galleryFooterRef,
+      galleryListRef,
+    } = this.state;
     const { visible } = this.props;
+
     return (
       <Gallery>
-        <GalleryList>
+        <GalleryList ref={galleryListRef}>
           {images.map(image => (
-            <ImageGalleryItems image={image} key={image.id} />
+            <ImageGalleryItems
+              image={image}
+              key={image.id}
+              galleryItemRef={galleryItemRef}
+            />
           ))}
         </GalleryList>
 
-        <GalleryFooter>
+        <GalleryFooter ref={galleryFooterRef}>
           <Loader visible={visible} />
           {totalElements > images.length && !visible && (
             <Button incrementPage={this.incrementPage}>Load more</Button>

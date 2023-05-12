@@ -21,11 +21,12 @@ class ImageGalleryItems extends Component {
 
   render() {
     const { webformatURL, tags, largeImageURL } = this.props.image;
+    const { galleryItemRef } = this.props;
     const { isOpen } = this.state;
 
     return (
       <>
-        <GalleryItem onClick={this.toggleModal}>
+        <GalleryItem onClick={this.toggleModal} ref={galleryItemRef}>
           <Image src={webformatURL} alt={tags} />
         </GalleryItem>
         {isOpen && (
@@ -49,4 +50,5 @@ ImageGalleryItems.propTypes = {
     tags: PropTypes.string.isRequired,
     largeImageURL: PropTypes.string.isRequired,
   }).isRequired,
+  galleryItemRef: PropTypes.object.isRequired,
 };
